@@ -8,6 +8,10 @@ body {
   margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f4;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px; /* Spazio per il footer */
+  box-sizing: border-box;
 }
 
 header {
@@ -111,11 +115,25 @@ header p {
   width: 100%;
   max-width: 600px;
   text-align: center;
+  margin-bottom: 40px; /* Aggiunto spazio sotto il player */
 }
 
 #audioPlayer {
   width: 100%;
   margin-top: 5px;
+}
+
+/* Nuovo stile per il footer e il copyright */
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  padding: 10px;
+}
+
+.copyright {
+  font-size: 0.8em;
+  color: #666;
 }
 
 @media (max-width: 768px) {
@@ -131,5 +149,10 @@ header p {
 
   .tracklist {
     width: 100%;
+  }
+
+  footer {
+    right: 10px;
+    padding: 5px;
   }
 }
