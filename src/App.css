@@ -10,7 +10,7 @@ body {
   background-color: #f4f4f4;
   position: relative;
   min-height: 100vh;
-  padding-bottom: 60px; /* Spazio per il footer */
+  padding-bottom: 60px;
   box-sizing: border-box;
 }
 
@@ -115,10 +115,10 @@ header p {
   width: 100%;
   max-width: 600px;
   text-align: center;
-  margin-bottom: 40px; /* Aggiunto spazio sotto il player */
+  margin-bottom: 40px;
 }
 
-#audioPlayer {
+.player audio {
   width: 100%;
   margin-top: 5px;
 }
@@ -137,27 +137,27 @@ header p {
   margin-bottom: 15px;
 }
 
-#comment-form {
+.comments-section form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-#comment-form input,
-#comment-form textarea {
+.comments-section input,
+.comments-section textarea {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-family: Arial, sans-serif;
 }
 
-#comment-form textarea {
+.comments-section textarea {
   height: 100px;
   resize: vertical;
 }
 
-#comment-form button {
+.comments-section button {
   padding: 10px;
   background-color: #1a1a1a;
   color: #fff;
@@ -167,7 +167,7 @@ header p {
   transition: background-color 0.3s;
 }
 
-#comment-form button:hover {
+.comments-section button:hover {
   background-color: #333;
 }
 
@@ -195,7 +195,6 @@ header p {
   margin-bottom: 10px;
 }
 
-/* Nuovo stile per il footer e il copyright */
 footer {
   position: absolute;
   bottom: 0;
