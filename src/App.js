@@ -26,12 +26,29 @@ function App() {
     { id: 6, title: "Cuore Spezzato", src: "./assets/Cuore Spezzato.mp3" },
     { id: 7, title: "Giovane Donna", src: "./assets/Giovane Donna.mp3" },
     { id: 8, title: "Sempre Amici", src: "./assets/Sempre Amici.mp3" },
+    { id: 9, title: "Giorni Perduti", src: "./assets/Giorni Perduti.mp3" },
+    { id: 10, title: "Contro Corrente", src: "./assets/Contro Corrente.mp3" },
   ];
 
   const handleTrackSelect = (track) => {
     setCurrentTrack(track);
     setIsPlaying(true);
   };
+
+  const handleTrackEnd = () => {
+    const currentIndex = tracks.findIndex(
+      (track) => track.id === currentTrack.id
+    );
+    const nextIndex = (currentIndex + 1) % tracks.length;
+    setCurrentTrack(tracks[nextIndex]);
+    setIsPlaying(true); // Ensure autoplay when moving to next track
+  };
+
+  useEffect(() => {
+    if (currentTrack) {
+      setIsPlaying(true);
+    }
+  }, [currentTrack]);
 
   return (
     <div className="App">
@@ -52,6 +69,8 @@ function App() {
           currentTrack={currentTrack}
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
+          onTrackEnd={handleTrackEnd}
+          disableRightClick={true}
         />
         <CommentSection />
       </div>

@@ -1,18 +1,37 @@
 import React, { useRef, useEffect } from "react";
 
-function Player({ currentTrack, isPlaying, setIsPlaying }) {
+function Player({
+  currentTrack,
+  isPlaying,
+  setIsPlaying,
+  onTrackEnd,
+  disableRightClick,
+}) {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (isPlaying) {
-      audioRef.current.play();
-    } else {
+    if (currentTrack && isPlaying) {
+      audioRef.current.play().catch((error) => {
+        console.error("Autoplay was prevented:", error);
+        setIsPlaying(false);
+      });
+    } else if (!isPlaying) {
       audioRef.current.pause();
     }
-  }, [isPlaying, currentTrack]);
+  }, [isPlaying, currentTrack, setIsPlaying]);
+
+  const handleTrackEnd = () => {
+    onTrackEnd();
+  };
+
+  const handleRightClick = (e) => {
+    if (disableRightClick) {
+      e.preventDefault();
+    }
+  };
 
   return (
-    <div className="player">
+    <div className="player" onContextMenu={handleRightClick}>
       <h3>Ora in riproduzione:</h3>
       <p>{currentTrack ? currentTrack.title : "Seleziona una traccia"}</p>
       <audio
@@ -20,6 +39,7 @@ function Player({ currentTrack, isPlaying, setIsPlaying }) {
         src={currentTrack ? currentTrack.src : ""}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onEnded={handleTrackEnd}
         controls
       />
     </div>
