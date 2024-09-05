@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { addComment, getCommentsByTrackId } from "../services/faunaService";
 
-function CommentSection() {
+function CommentSection({ trackId }) {
   const [comments, setComments] = useState([]);
-  const [name, setName] = useState("");
-  const [comment, setComment] = useState("");
+  const [newComment, setNewComment] = useState({ author: "", content: "" });
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    fetchComments();
+  }, [trackId]);
+
+  const fetchComments = async () => {
+    try {
+      const fetchedComments = await getCommentsByTrackId(trackId);
+      setComments(fetchedComments);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newComment = {
-      name,
-      comment,
-      date: new Date().toLocaleString(),
-    };
-    setComments([newComment, ...comments]);
-    setName("");
-    setComment("");
+    try {
+      await addComment(trackId, newComment.author, newComment.content);
+      setNewComment({ author: "", content: "" });
+      fetchComments();
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
   return (
@@ -23,25 +35,31 @@ function CommentSection() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Il tuo nome"
+          value={newComment.author}
+          onChange={(e) =>
+            setNewComment({ ...newComment, author: e.target.value })
+          }
           required
         />
         <textarea
-          placeholder="Commento"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          placeholder="Il tuo commento"
+          value={newComment.content}
+          onChange={(e) =>
+            setNewComment({ ...newComment, content: e.target.value })
+          }
           required
-        ></textarea>
-        <button type="submit">Invia Commento</button>
+        />
+        <button type="submit">Invia commento</button>
       </form>
       <div id="comments-list">
-        {comments.map((c, index) => (
-          <div key={index} className="comment">
-            <div className="author">{c.name}</div>
-            <div className="date">{c.date}</div>
-            <div className="content">{c.comment}</div>
+        {comments.map((comment) => (
+          <div key={comment.id} className="comment">
+            <div className="author">{comment.author}</div>
+            <div className="date">
+              {new Date(comment.createdAt).toLocaleString()}
+            </div>
+            <div className="content">{comment.content}</div>
           </div>
         ))}
       </div>

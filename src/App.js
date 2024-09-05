@@ -76,6 +76,7 @@ function App() {
       </div>
       <footer>
         <div className="copyright">© 2024 Bob Production</div>
+        <div className="copyright">bobproduction2024@gmail.com</div>
       </footer>
     </div>
   );
