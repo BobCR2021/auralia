@@ -4,6 +4,7 @@ import Tracklist from "./components/Tracklist";
 import Player from "./components/Player";
 import CommentSection from "./components/CommentSection";
 import "./App.css";
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -52,6 +53,7 @@ function App() {
 
   return (
     <div className="App">
+      <ThemeToggle />
       <header>
         <h1>Voci del Cuore</h1>
         <p>Il nuovo album di Auralia</p>

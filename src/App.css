@@ -8,7 +8,20 @@
   --white: #fff;
   --light-gray: #f9f9f9;
   --border-color: #ddd;
-  --max-width: 1000px;
+  --gradient-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+  --background-gradient: var(--gradient-light);
+}
+
+[data-theme="dark"] {
+  --primary-color: #f4f4f4;
+  --secondary-color: #ddd;
+  --text-color: #f4f4f4;
+  --background-color: #333;
+  --white: #1a1a1a;
+  --light-gray: #2a2a2a;
+  --border-color: #555;
+  --background-gradient: var(--gradient-dark);
 }
 
 * {
@@ -25,11 +38,12 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
-  background-color: var(--background-color);
+  background: var(--background-gradient);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 .container {
@@ -289,4 +303,28 @@ footer {
   .comments-section {
     padding: 0.75rem;
   }
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
 }
